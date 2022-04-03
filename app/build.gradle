@@ -1,0 +1,29 @@
+plugins {
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
+}
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+dependencies {
+    implementation('org.springframework.ldap:spring-ldap-ldif-core:2.4.0-M2') {
+        // remove this exclude to let the app fail due to the split package 'org.springframework.ldap.core'
+        exclude(group: 'org.springframework.ldap', module: 'spring-ldap-core')
+    }
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+}
+
+application {
+    mainClass = 'com.github.hpoettker.App'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
